@@ -52,7 +52,7 @@ export default function App() {
               <Navbar expand="lg" className="navbar-theme sticky-top">
                 <Container>
                   <Navbar.Brand as={Link} to="/" className="navbar-brand-theme">
-                    ECOMMERCE CAPS
+                    VELOX-CORE
                   </Navbar.Brand>
                   <Navbar.Toggle
                     aria-controls="main-navbar"

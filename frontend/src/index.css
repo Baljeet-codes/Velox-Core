@@ -1,47 +1,56 @@
-/* ===== ECOMMERCE CAPS — Design System ===== */
+/* ===== VELOX-CORE — Design System ===== */
 
 :root {
-  /* ── Fondos: carbón puro, sin azul ── */
-  --bg-0:  #080808;   /* body */
-  --bg-1:  #0f0f0f;   /* navbar, admin bar */
-  --bg-2:  #141414;   /* tarjetas */
-  --bg-3:  #1c1c1c;   /* modales, superficies elevadas */
-  --bg-4:  #222222;   /* cabeceras de modal, hover sutil */
+  /* ── Fondos: carbón puro ── */
+  --bg-0:  #080808;
+  --bg-1:  #0f0f0f;
+  --bg-2:  #141414;
+  --bg-3:  #1c1c1c;
+  --bg-4:  #222222;
 
   /* ── Bordes ── */
-  --border:        rgba(255, 255, 255, 0.07);
-  --border-md:     rgba(255, 255, 255, 0.12);
-  --border-accent: rgba(212, 175, 95, 0.30);
+  --border:        rgba(255, 255, 255, 0.06);
+  --border-md:     rgba(255, 255, 255, 0.10);
+  --border-accent: rgba(16, 185, 129, 0.30);
 
-  /* ── Acento — Oro cálido ── */
-  --gold:      #d4af5f;
-  --gold-lt:   #e8cc7f;
-  --gold-dk:   #b8923f;
-  --gold-glow: rgba(212, 175, 95, 0.10);
+  /* ── Acento — Verde esmeralda ── */
+  --gold:      #10b981;
+  --gold-lt:   #34d399;
+  --gold-dk:   #059669;
+  --gold-glow: rgba(16, 185, 129, 0.12);
+
+  --emerald:       #10b981;
+  --emerald-light: #34d399;
+  --emerald-dark:  #059669;
+  --emerald-glow:  rgba(16, 185, 129, 0.12);
+
+  /* ── Fondos degradados sutiles ── */
+  --emerald-gradient: linear-gradient(135deg, #059669, #10b981, #34d399);
 
   /* Alias retrocompatibles */
   --bg-dark:      #080808;
   --card-bg:      #141414;
-  --border-color: rgba(255,255,255,0.07);
-  --accent-cyan:  #d4af5f;
+  --border-color: rgba(255,255,255,0.06);
+  --accent-cyan:  #10b981;
   --text-main:    #f0f0f0;
   --text-muted:   #606060;
 
   /* ── Texto ── */
-  --t1: #f0f0f0;   /* primario */
-  --t2: #808080;   /* secundario */
-  --t3: #404040;   /* muted */
+  --t1: #f0f0f0;
+  --t2: #a0a0a0;
+  --t3: #505050;
 
   /* ── Estado ── */
-  --ok:   #34d399;
+  --ok:   #10b981;
   --warn: #fbbf24;
-  --err:  #f87171;
+  --err:  #ef4444;
 
   /* ── Sombras ── */
   --sh-sm:   0 2px 8px  rgba(0,0,0,.40);
   --sh-md:   0 8px 28px rgba(0,0,0,.55);
   --sh-lg:   0 20px 60px rgba(0,0,0,.70);
-  --sh-gold: 0 8px 40px rgba(212,175,95,.14);
+  --sh-gold: 0 8px 40px rgba(16,185,129,.14);
+  --sh-emerald: 0 8px 40px rgba(16,185,129,.14);
 
   /* ── Radios ── */
   --r1:  8px;

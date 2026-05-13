@@ -24,7 +24,7 @@ export default function Dashboard({ admin, onLogout }) {
       {/* Topbar */}
       <div className="admin-topbar">
         <div style={{ display: "flex", alignItems: "center" }}>
-          <span className="admin-brand">ECOMMERCE CAPS</span>
+          <span className="admin-brand">VELOX-CORE</span>
           <div className="admin-nav-pill">
             {["productos", "usuarios", "pedidos"].map((v) => (
               <button
