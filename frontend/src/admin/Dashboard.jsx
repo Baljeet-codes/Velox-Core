@@ -4,7 +4,7 @@ import Catalogo from "../pages/Catalogo";
 import Usuarios from "./Usuarios";
 import Pedidos from "./Pedidos";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function Dashboard({ admin, onLogout }) {
   const [vista, setVista] = useState("productos");

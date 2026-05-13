@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function AdminLogin({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ export default function AdminLogin({ onLogin }) {
         {/* Header */}
         <div className="text-center mb-5">
           <p className="navbar-brand-theme" style={{ fontSize: "1.1rem", letterSpacing: "2.5px", marginBottom: "8px" }}>
-            ECOMMERCE CAPS
+            VELOX-CORE
           </p>
           <h2 className="fw-bold mb-1" style={{ color: "var(--text-primary)", fontSize: "1.6rem" }}>
             Panel de Administración
