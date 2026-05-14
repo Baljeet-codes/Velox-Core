@@ -1,26 +1,26 @@
 services:
   postgres:
     image: postgres:16
-    container_name: ecommerce-db
+    container_name: velox-db
     environment:
       POSTGRES_USER: ecommerce_user
       POSTGRES_PASSWORD: ecommerce123
       POSTGRES_DB: ecommerce_db
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - velox_postgres_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: ecommerce-pgadmin
+    container_name: velox-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
-      - "5050:80"
+      - "5051:80"
     depends_on:
       - postgres
 
 volumes:
-  postgres_data:
+  velox_postgres_data:
