@@ -35,5 +35,8 @@ Thumbs.db
 *.swp
 *.swo
 
+# ── Uploads (generados por el backend) ──
+static/uploads/
+
 # ── Logs ──
 *.log

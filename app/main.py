@@ -1,6 +1,8 @@
 import os
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.database import Base
 from app import models
 from app.routers import categorias, productos, usuarios, carrito, pedidos, imagenes, stats
@@ -31,6 +33,9 @@ app.include_router(carrito.router)
 app.include_router(pedidos.router)
 app.include_router(imagenes.router)
 app.include_router(stats.router)
+
+os.makedirs("static/uploads", exist_ok=True)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def root():

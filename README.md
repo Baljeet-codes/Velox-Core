@@ -1,346 +1,207 @@
-# 🛒 EcommerceCaps
+# Velox-Core
 
-> Plataforma de e-commerce dedicada a la venta de gorras, lociones y relojes.
+> Plataforma de e-commerce moderna con frontend React + Vite y backend FastAPI.
 
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.136.0-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?style=flat&logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-5.2-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-## 📋 Descripción del Proyecto
-
-EcommerceCaps es una API RESTful desarrollada con **FastAPI** que proporciona la infraestructura necesaria para una tienda en línea de accesorios (gorras, lociones y relojes). El proyecto incluye gestión de usuarios, productos, categorías, carrito de compras y pedidos.
-
-### ✨ Características Principales
-
-- 🔐 **Autenticación segura** con JWT y hashing de contraseñas
-- 👥 **Gestión de usuarios** con roles y puntos de fidelidad
-- 📦 **Gestión de productos** con categorías, marcas y stock
-- 🛒 **Carrito de compras** persistente por usuario
-- 📋 **Sistema de pedidos** completo con estados
-- 🐘 **Base de datos PostgreSQL** con Docker
-- 📚 **Documentación interactiva** con Swagger UI
-- 🔄 **Scripts SQL** para inicialización y datos de prueba
-
----
-
-## 🛠️ Tecnologías
+## Tecnologías
 
 | Categoría | Tecnología |
-|-----------|-------------|
-| **Backend** | FastAPI (Python 3.12+) |
+|-----------|------------|
+| **Backend** | FastAPI (Python 3.12) |
 | **Base de datos** | PostgreSQL 16 |
 | **ORM** | SQLAlchemy 2.0 |
-| **Contenedores** | Docker + Docker Compose |
-| **Admin DB** | pgAdmin 4 |
-| **Servidor** | Uvicorn |
 | **Frontend** | React 18 + Vite 5 |
-| **UI** | Bootstrap 5 |
+| **UI** | Bootstrap 5 + React-Bootstrap |
+| **Contenedores** | Docker + Docker Compose |
 
 ---
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
-> ⚠️ **IMPORTANTE:** Antes de iniciar, asegúrate de tener instaladas las versiones correctas de cada herramienta. Las versiones anteriores pueden causar problemas de compatibilidad.
-
-### Requisitos del Sistema
-
-| Herramienta | Versión Mínima | Versión Recomendada | Verificar Instalación |
-|-------------|----------------|---------------------|----------------------|
-| **Python** | 3.12+ | 3.12.x | `python3 --version` |
-| **Node.js** | 18.0+ | 20.x LTS | `node --version` |
-| **npm** | 9.0+ | 10.x | `npm --version` |
-| **Docker** | 20.10+ | Latest | `docker --version` |
-| **Docker Compose** | 2.0+ | Latest | `docker compose version` |
-| **PostgreSQL** (cliente) | 14+ | 16 | `psql --version` |
-
-### Verificar Versiones Instaladas
-
-```bash
-# Verificar todas las versiones instaladas
-echo "=== Python ===" && python3 --version
-echo "=== Node.js ===" && node --version
-echo "=== npm ===" && npm --version
-echo "=== Docker ===" && docker --version
-echo "=== Docker Compose ===" && docker compose version
-```
-
-### Instalar Node.js (si no lo tienes)
-
-**Ubuntu/Debian:**
-```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
-
-**macOS (con Homebrew):**
-```bash
-brew install node@20
-```
-
-**Windows:**
-Descargar desde [nodejs.org](https://nodejs.org/) la versión LTS recomendada.
+| Herramienta | Versión |
+|-------------|---------|
+| Python | 3.12+ |
+| Node.js | 18+ |
+| npm | 9+ |
+| Docker | 20.10+ |
+| Docker Compose | 2+ |
 
 ---
 
-## 🚀 Instalación y Configuración
+## Instalación y Ejecución
 
-### 1. Clonar el Repositorio
-
-```bash
-git clone https://github.com/devsebas22/EcommerceCaps.git
-cd EcommerceCaps/proyectoFinal
-```
-
-### 2. Crear el Entorno Virtual
+### 1. Clonar e ir al proyecto
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate    # Linux/Mac
-# venv\Scripts\activate     # Windows
+git clone https://github.com/Baljeet-codes/Velox-Core.git
+cd Velox-Core
 ```
 
-### 3. Instalar Dependencias de Python
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Instalar Dependencias del Frontend
-
-```bash
-cd frontend
-npm install
-cd ..
-```
-
-### 5. Configurar Variables de Entorno
-
-Crea un archivo `.env` en la raíz del proyecto:
-
-```env
-DATABASE_URL=postgresql://ecommerce_user:ecommerce123@127.0.0.1:5433/ecommerce_db
-```
-
-### 6. Levantar la Base de Datos
+### 2. Levantar base de datos
 
 ```bash
 docker compose up -d
 ```
 
-### 7. Inicializar la Base de Datos
+### 3. Inicializar base de datos
 
 ```bash
-# Ejecutar script de creación de tablas
 docker exec -i ecommerce-db psql -U ecommerce_user -d ecommerce_db < create_tables.sql
-
-# (Opcional) Cargar datos de ejemplo
 docker exec -i ecommerce-db psql -U ecommerce_user -d ecommerce_db < seed.sql
 ```
 
----
-
-## ▶️ Iniciar el Proyecto
-
-### ⚡ Método Rápido (Recomendado): Script `iniciar.sh`
-
-> ⚠️ **Nota:** Este script está diseñado para sistemas **Linux/macOS** con Zsh. Requiere haber completado los pasos de instalación anteriores.
+### 4. Iniciar backend y frontend
 
 ```bash
-# Dar permisos de ejecución (solo la primera vez)
-chmod +x iniciar.sh
-
-# Ejecutar el script
 ./iniciar.sh
 ```
 
-**Esto iniciara:**
-1. Backend (FastAPI) en [http://127.0.0.1:8000](http://127.0.0.1:8000)
-2. Frontend (React + Vite) en [http://localhost:5173](http://localhost:5173)
-3. Documentación API en [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+Esto instala dependencias automáticamente y arranca ambos servidores.
+
+### Accesos
+
+| Servicio | URL |
+|----------|-----|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:8000 |
+| Documentación | http://localhost:8000/docs |
+| pgAdmin | http://localhost:5050 (admin@admin.com / admin123) |
 
 ---
 
-### 📝 Método Manual: Iniciar Servicios Manualmente
-
-Si prefieres iniciar los servicios manualmente:
-
-#### Iniciar el Backend
+### Método manual
 
 ```bash
-source venv/bin/activate
-uvicorn app.main:app --reload --env-file .env
-```
+# Backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 &
 
-#### Iniciar el Frontend
-
-```bash
+# Frontend
 cd frontend
+npm install
 npm run dev
 ```
 
-#### Acceder a la Documentación
-
-Abre en tu navegador: **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**
-
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
-proyectoFinal/
+Velox-Core/
 ├── app/
-│   ├── __init__.py         # Inicialización de la app
-│   ├── database.py         # Configuración de base de datos
-│   ├── main.py             # Punto de entrada de FastAPI
-│   ├── models/             # Modelos SQLAlchemy
-│   │   ├── usuario.py
-│   │   ├── producto.py
-│   │   ├── categoria.py
-│   │   ├── carrito.py
-│   │   └── pedido.py
-│   ├── routers/            # Endpoints de la API
-│   │   ├── usuarios.py
-│   │   ├── productos.py
-│   │   ├── categorias.py
-│   │   ├── carrito.py
-│   │   └── pedidos.py
-│   └── schemas/            # Esquemas Pydantic
-│       ├── usuario.py
-│       ├── producto.py
-│       ├── categoria.py
-│       ├── carrito.py
-│       └── pedido.py
-├── frontend/                # Frontend React + Vite
+│   ├── __init__.py
+│   ├── main.py              # FastAPI entry point + CORS + static files
+│   ├── database.py          # SQLAlchemy config
+│   ├── models/              # SQLAlchemy models
+│   ├── routers/             # API endpoints
+│   ├── schemas/             # Pydantic schemas
+│   └── utils/
+│       └── s3_uploader.py   # S3 upload utility (preparado para AWS)
+├── frontend/
 │   ├── src/
 │   │   ├── App.jsx
-│   │   ├── Catalogo.jsx
-│   │   ├── Registro.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
+│   │   ├── pages/           # Catálogo, Login, Registro, MisPedidos
+│   │   ├── admin/           # Dashboard, Productos, Usuarios, Pedidos
+│   │   ├── components/      # ProductCard, ProductModal, AdminProductForm
+│   │   └── hooks/           # useCarrito
 │   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-├── create_tables.sql       # Script de creación de tablas
-├── seed.sql                # Datos de ejemplo iniciales
-├── docker-compose.yml      # Configuración de contenedores
-├── requirements.txt        # Dependencias Python
-├── iniciar.sh              # Script de inicio rápido
-└── .env                    # Variables de entorno
+│   ├── vite.config.js
+│   └── .env.production
+├── Dockerfile               # Contenedor para backend
+├── .dockerignore
+├── docker-compose.yml       # PostgreSQL + pgAdmin
+├── requirements.txt
+├── iniciar.sh               # Script de inicio rápido
+└── create_tables.sql / seed.sql
 ```
 
 ---
 
-## 🗄️ Esquema de Base de Datos
-
-### Tablas Principales
-
-| Tabla | Descripción |
-|-------|-------------|
-| `usuarios` | Usuarios con email, password, dirección, teléfono, rol admin y puntos de fidelidad |
-| `categorias` | Categorías de productos (gorras, lociones, relojes) |
-| `productos` | Productos con nombre, descripción, precio, marca, stock e imagen |
-| `carritos` | Carritos asociados a usuarios |
-| `carrito_items` | Items dentro del carrito (relación carrito-producto) |
-| `pedidos` | Pedidos con estado, total y dirección de envío |
-| `pedido_items` | Items de cada pedido |
-
-### Datos de Ejemplo (seed.sql)
-
-El proyecto incluye datos iniciales para probar:
-- **3 categorías:** gorras, lociones, relojes
-- **5 productos:** Gorras Nike, Loción Armani, Reloj Casio, Loción Gucci, Gorra Puma BMW
-
----
-
-## 🔗 Endpoints de la API
+## Endpoints de la API
 
 ### Usuarios
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| `POST` | `/usuarios/` | Crear usuario |
-| `GET` | `/usuarios/{id}` | Obtener usuario por ID |
-| `PUT` | `/usuarios/{id}` | Actualizar usuario |
+| POST | `/usuarios/` | Crear usuario |
+| POST | `/usuarios/login` | Iniciar sesión |
+| GET | `/usuarios/{id}` | Obtener usuario |
+| PUT | `/usuarios/{id}` | Actualizar usuario |
+| DELETE | `/usuarios/{id}` | Eliminar usuario |
 
 ### Productos
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| `GET` | `/productos/` | Listar todos los productos |
-| `GET` | `/productos/{id}` | Obtener producto por ID |
-| `POST` | `/productos/` | Crear nuevo producto |
-| `PUT` | `/productos/{id}` | Actualizar producto |
-| `DELETE` | `/productos/{id}` | Eliminar producto |
+| GET | `/productos/` | Listar productos |
+| GET | `/productos/{id}` | Obtener producto |
+| POST | `/productos/` | Crear producto |
+| PUT | `/productos/{id}` | Actualizar producto |
+| DELETE | `/productos/{id}` | Eliminar producto |
 
 ### Categorías
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| `GET` | `/categorias/` | Listar todas las categorías |
-| `GET` | `/categorias/{id}` | Obtener categoría por ID |
-| `POST` | `/categorias/` | Crear nueva categoría |
-| `DELETE` | `/categorias/{id}` | Eliminar categoría |
+| GET | `/categorias/` | Listar categorías |
+| POST | `/categorias/` | Crear categoría |
+| DELETE | `/categorias/{id}` | Eliminar categoría |
 
 ### Carrito
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| `GET` | `/carrito/{usuario_id}` | Ver carrito del usuario |
-| `POST` | `/carrito/{usuario_id}` | Agregar producto al carrito |
-| `PUT` | `/carrito/{usuario_id}/item/{item_id}` | Actualizar cantidad de un item |
-| `DELETE` | `/carrito/{usuario_id}/item/{item_id}` | Eliminar item del carrito |
+| GET | `/carrito/{usuario_id}` | Ver carrito |
+| POST | `/carrito/{usuario_id}` | Agregar producto |
+| PUT | `/carrito/{usuario_id}/item/{item_id}` | Actualizar cantidad |
+| DELETE | `/carrito/{usuario_id}/item/{item_id}` | Eliminar item |
 
 ### Pedidos
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| `POST` | `/pedidos/{usuario_id}` | Crear pedido desde el carrito |
-| `GET` | `/pedidos/historial/{usuario_id}` | Ver historial de pedidos |
+| POST | `/pedidos/{usuario_id}` | Crear pedido |
+| GET | `/pedidos/historial/{usuario_id}` | Historial de pedidos |
+| GET | `/pedidos/todos/` | Todos los pedidos (admin) |
+| PUT | `/pedidos/{pedido_id}/estado` | Actualizar estado (admin) |
 
-> 📖 Documentación completa disponible en **Swagger UI** en [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
----
-
-## 🐳 Servicios Docker
-
-| Servicio | Puerto | Descripción |
-|----------|--------|-------------|
-| **PostgreSQL** | `5433` | Base de datos |
-| **pgAdmin** | `5050` | Admin de DB (admin@admin.com / admin123) |
+### Imágenes
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/imagenes/subir` | Subir imagen (multipart) |
+| GET | `/imagenes/{producto_id}` | Obtener imágenes de producto |
+| DELETE | `/imagenes/{imagen_id}` | Eliminar imagen |
 
 ---
 
-## 🤝 Contribuir
+## Variables de Entorno
 
-1. Fork del repositorio
-2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
-
----
-
-## 👥 Autores
-
-<div align="center">
-
-| |
-|---|
-| **Juan Esteban Aguirre Foronda** |
-| **Sebastian Mogollón Mendoza** |
-
-</div>
-> © 2026 EcommerceCaps - Todos los derechos reservados---
-
-## �📄 Licencia
-
-Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+| Variable | Default | Descripción |
+|----------|---------|-------------|
+| `DATABASE_URL` | `postgresql://ecommerce_user:ecommerce123@127.0.0.1:5433/ecommerce_db` | Conexión PostgreSQL |
+| `FRONTEND_URL` | `http://localhost:5173` | Origen CORS frontend |
+| `VITE_API_URL` | `http://localhost:8000` | URL del backend (frontend) |
 
 ---
 
-<div align="center">
+## Preparado para AWS
 
-⭐️ Si te gusta este proyecto, ¡dale una estrella!
+El proyecto incluye estructura lista para despliegue en AWS:
+- `Dockerfile` para contenerizar el backend
+- `app/utils/s3_uploader.py` para subida a S3 (activar con variables de entorno)
+- CORS configurable vía `FRONTEND_URL`
+- `API_BASE` centralizado vía `import.meta.env.VITE_API_URL`
 
-</div>
+Para activar S3, configura:
+```
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=us-east-1
+S3_BUCKET_NAME=
+```
+
+---

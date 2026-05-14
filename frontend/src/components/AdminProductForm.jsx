@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 const FORM_VACIO = { nombre: "", descripcion: "", precio: "", marca: "", stock: "", categoria_id: "", archivo: null };
 
 export default function AdminProductForm({ show, onHide, productoEditando, onSuccess }) {
@@ -53,19 +53,13 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
 
       if (form.archivo) {
         const formData = new FormData();
-        formData.append("image", form.archivo);
-        const imgRes = await fetch(
-          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
-          { method: "POST", body: formData }
-        );
-        const imgData = await imgRes.json();
-        if (imgData.success) {
-          await fetch(`${API_BASE}/imagenes/`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url: imgData.data.url, es_principal: true, producto_id: data.id }),
-          });
-        }
+        formData.append("file", form.archivo);
+        formData.append("producto_id", data.id);
+        formData.append("es_principal", "true");
+        await fetch(`${API_BASE}/imagenes/subir`, {
+          method: "POST",
+          body: formData,
+        });
       }
 
       onSuccess({ tipo: "ok", texto: productoEditando ? "Producto actualizado" : "Producto creado" });
