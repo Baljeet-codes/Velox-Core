@@ -91,6 +91,9 @@ def login(datos: LoginRequest, db: Session = Depends(get_db)):
         id=usuario.id,
         nombre=usuario.nombre,
         email=usuario.email,
+        telefono=usuario.telefono,
+        direccion=usuario.direccion,
         es_admin=usuario.es_admin,
+        puntos_fidelidad=usuario.puntos_fidelidad,
         mensaje="Login exitoso"
     )
