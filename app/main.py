@@ -34,6 +34,10 @@ app.include_router(stats.router)
 os.makedirs("static/uploads", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+@app.get("/health", tags=["Salud"])
+def health_check():
+    return {"status": "healthy", "service": "velox-core"}
+
 @app.get("/")
 def root():
     return {"mensaje": "Bienvenido al API de Ecommerce 🛒"}
