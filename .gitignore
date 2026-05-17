@@ -40,3 +40,4 @@ static/uploads/
 
 # ── Logs ──
 *.log
+cdk/cdk.out/
