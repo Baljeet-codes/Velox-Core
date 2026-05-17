@@ -8,20 +8,7 @@ from app.routers import categorias, productos, usuarios, carrito, pedidos, image
 
 app = FastAPI()
 
-vite_port = os.getenv("VITE_PORT", "5173")
-frontend_url = os.getenv("FRONTEND_URL", f"http://localhost:{vite_port}")
-
-origins = [
-    frontend_url,
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:5174",
-    "http://127.0.0.1:5175",
-    "http://127.0.0.1:5176",
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:5176",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
