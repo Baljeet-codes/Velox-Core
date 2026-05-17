@@ -5,8 +5,13 @@ from fastapi.staticfiles import StaticFiles
 from app.database import Base
 from app import models
 from app.routers import categorias, productos, usuarios, carrito, pedidos, imagenes, stats
+from app.seed_admin import crear_admin
 
 app = FastAPI()
+
+@app.on_event("startup")
+def startup():
+    crear_admin()
 
 origins = ["*"]
 
