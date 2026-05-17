@@ -5,23 +5,15 @@ from fastapi.staticfiles import StaticFiles
 from app.database import Base
 from app import models
 from app.routers import categorias, productos, usuarios, carrito, pedidos, imagenes, stats
+from app.seed_admin import crear_admin
 
 app = FastAPI()
 
-vite_port = os.getenv("VITE_PORT", "5173")
-frontend_url = os.getenv("FRONTEND_URL", f"http://localhost:{vite_port}")
+@app.on_event("startup")
+def startup():
+    crear_admin()
 
-origins = [
-    frontend_url,
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:5174",
-    "http://127.0.0.1:5175",
-    "http://127.0.0.1:5176",
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:5176",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,

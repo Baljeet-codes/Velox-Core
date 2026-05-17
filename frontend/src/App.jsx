@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import Catalogo from "./pages/Catalogo";
 import Registro from "./pages/Registro";
