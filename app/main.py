@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -7,15 +6,21 @@ from app.database import Base
 from app import models
 from app.routers import categorias, productos, usuarios, carrito, pedidos, imagenes, stats
 
-
-
 app = FastAPI()
 
+vite_port = os.getenv("VITE_PORT", "5173")
+frontend_url = os.getenv("FRONTEND_URL", f"http://localhost:{vite_port}")
+
 origins = [
-    os.getenv("FRONTEND_URL", "http://localhost:5173"),
-    os.getenv("FRONTEND_URL_ALT", "http://localhost:5174"),
+    frontend_url,
     "http://127.0.0.1:5173",
     "http://127.0.0.1:5174",
+    "http://127.0.0.1:5175",
+    "http://127.0.0.1:5176",
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176",
 ]
 
 app.add_middleware(

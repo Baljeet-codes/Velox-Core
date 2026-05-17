@@ -26,5 +26,8 @@ class LoginResponse(BaseModel):
     id: int
     nombre: str
     email: str
+    telefono: str | None = None
+    direccion: str | None = None
     es_admin: bool
+    puntos_fidelidad: int = 0
     mensaje: str
