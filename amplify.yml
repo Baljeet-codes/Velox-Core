@@ -2,12 +2,9 @@ version: 1
 applications:
   - frontend:
       phases:
-        preBuild:
-          commands:
-            - cd frontend && npm ci
         build:
           commands:
-            - cd frontend && npm run build
+            - cd frontend && npm ci && npm run build
       artifacts:
         baseDirectory: frontend/dist
         files:
