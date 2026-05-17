@@ -2,6 +2,7 @@ services:
   postgres:
     image: postgres:16
     container_name: velox-db
+    restart: always
     environment:
       POSTGRES_USER: ecommerce_user
       POSTGRES_PASSWORD: ecommerce123
@@ -14,6 +15,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: velox-pgadmin
+    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin123
