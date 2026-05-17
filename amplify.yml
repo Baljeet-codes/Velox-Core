@@ -9,7 +9,7 @@ applications:
           commands:
             - cd frontend && npm run build
       artifacts:
-        baseDirectory: dist
+        baseDirectory: frontend/dist
         files:
           - '**/*'
       cache:
