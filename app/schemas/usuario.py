@@ -1,10 +1,11 @@
+from typing import Optional
 from pydantic import BaseModel, EmailStr
 
 class UsuarioBase(BaseModel):
     nombre: str
     email: EmailStr
-    direccion: str | None = None
-    telefono: str | None = None
+    direccion: Optional[str] = None
+    telefono: Optional[str] = None
 
 class UsuarioCreate(UsuarioBase):
     password: str
@@ -26,8 +27,8 @@ class LoginResponse(BaseModel):
     id: int
     nombre: str
     email: str
-    telefono: str | None = None
-    direccion: str | None = None
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
     es_admin: bool
     puntos_fidelidad: int = 0
     mensaje: str

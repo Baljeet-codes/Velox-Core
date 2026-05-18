@@ -1,8 +1,9 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class CategoriaBase(BaseModel):
     nombre: str
-    descripcion: str | None = None
+    descripcion: Optional[str] = None
 
 class CategoriaCreate(CategoriaBase):
     pass
