@@ -42,6 +42,9 @@ export class ComputeStack extends cdk.Stack {
       `FRONTEND_URL=https://velox-core.amplifyapp.com`,
       'EOF',
       '',
+      '# Force pull latest code to override stale AMI code',
+      'curl -s -o /opt/velox-core/app/main.py https://raw.githubusercontent.com/Baljeet-codes/Velox-Core/main/app/main.py || true',
+      '',
       'systemctl enable velox-core',
       'systemctl start velox-core',
     );
