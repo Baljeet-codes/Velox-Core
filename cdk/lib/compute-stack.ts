@@ -34,7 +34,7 @@ export class ComputeStack extends cdk.Stack {
       '# ── Download and extract app code ──',
       'curl -sL https://github.com/Baljeet-codes/Velox-Core/archive/main.tar.gz -o /tmp/repo.tar.gz',
       'tar xzf /tmp/repo.tar.gz --strip=2 -C /opt/velox-core/app Velox-Core-main/app/',
-      'tar xzf /tmp/repo.tar.gz --strip=2 -C /opt/velox-core/ "Velox-Core-main/alembic.ini" "Velox-Core-main/requirements.txt"',
+      'tar xzf /tmp/repo.tar.gz --strip=1 -C /opt/velox-core/ "Velox-Core-main/alembic.ini" "Velox-Core-main/requirements.txt"',
       'tar xzf /tmp/repo.tar.gz --strip=1 -C /opt/velox-core/alembic Velox-Core-main/alembic/',
       'rm -f /tmp/repo.tar.gz',
       '',
