@@ -15,7 +15,7 @@ class Producto(Base):
     categoria_id = Column(Integer, ForeignKey("categorias.id"), nullable=False)
 
     categoria = relationship("Categoria", back_populates="productos")
-    imagenes = relationship("ProductoImagen", back_populates="producto")
+    imagenes = relationship("ProductoImagen", back_populates="producto", cascade="all, delete-orphan")
 
 class ProductoImagen(Base):
     __tablename__ = "producto_imagenes"
