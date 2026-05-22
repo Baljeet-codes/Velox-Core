@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import { API_BASE } from "../config";
 import { useImgBB } from "../hooks/useImgBB";
+import AdminImageGallery from "./AdminImageGallery";
 
 const FORM_VACIO = { nombre: "", descripcion: "", precio: "", marca: "", stock: "", categoria_id: "", archivo: null };
 
@@ -147,6 +148,8 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
               <p style={{ color: "var(--err)", fontSize: "0.78rem", marginTop: 6 }}>{errorImgBB}</p>
             )}
           </Form.Group>
+
+          {productoEditando && <AdminImageGallery productoId={productoEditando.id} />}
 
           <div className="d-grid">
             <Button type="submit" className="btn-theme-primary" disabled={guardando || subiendo}>
