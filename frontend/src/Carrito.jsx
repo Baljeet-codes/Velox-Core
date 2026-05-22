@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Alert, Spinner } from "react-bootstrap";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
-const imgPrincipal = (producto) =>
-  producto.imagenes?.find((i) => i.es_principal)?.url ?? producto.imagenes?.[0]?.url ?? null;
+import { API_BASE } from "./config";
+import { imgPrincipal } from "./utils/imagenUtils";
 
 /* ─── Checkout modal ─── */
 function Checkout({ usuario, total, onClose, onSuccess }) {
@@ -102,7 +100,7 @@ export default function CarritoDrawer({ open, onClose, usuario, onChange }) {
 
   useEffect(() => {
     if (open && usuario) fetchCarrito();
-  }, [open]);
+  }, [open, usuario]);
 
   const fetchCarrito = async () => {
     setCargando(true);

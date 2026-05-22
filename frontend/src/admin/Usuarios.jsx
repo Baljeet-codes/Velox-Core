@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Badge, Spinner, Button } from "react-bootstrap";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_BASE } from "../config";
 
 export default function Usuarios({ admin }) {
   const [usuarios, setUsuarios] = useState([]);

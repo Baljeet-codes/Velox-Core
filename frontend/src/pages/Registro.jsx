@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Alert, Row, Col } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_BASE } from "../config";
 
 export default function Registro() {
   const [nombre, setNombre] = useState("");

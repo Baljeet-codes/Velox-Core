@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_BASE } from "../config";
 
 const TIERS = [
   { min: 0,   label: "Bronce",   color: "#cd7f32", nextLabel: "Plata", nextMin: 100 },

@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, Form, Button, Spinner } from "react-bootstrap";
+import { API_BASE } from "../config";
+import { useImgBB } from "../hooks/useImgBB";
+import AdminImageGallery from "./AdminImageGallery";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 const FORM_VACIO = { nombre: "", descripcion: "", precio: "", marca: "", stock: "", categoria_id: "", archivo: null };
 
 export default function AdminProductForm({ show, onHide, productoEditando, onSuccess }) {
   const [form, setForm] = useState(FORM_VACIO);
   const [categorias, setCategorias] = useState([]);
+  const [preview, setPreview] = useState(null);
+  const [guardando, setGuardando] = useState(false);
+  const { subir, subiendo, error: errorImgBB, limpiarError } = useImgBB();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (!show) return;
     fetch(`${API_BASE}/categorias/`).then((r) => r.json()).then(setCategorias);
+    setPreview(null);
+    limpiarError();
     setForm(
       productoEditando
         ? {
@@ -24,10 +32,20 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
           }
         : FORM_VACIO
     );
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }, [show, productoEditando]);
+
+  const handleFileChange = (e) => {
+    const archivo = e.target.files[0];
+    if (!archivo) return;
+    setForm((prev) => ({ ...prev, archivo }));
+    setPreview(URL.createObjectURL(archivo));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setGuardando(true);
+
     const body = {
       nombre: form.nombre,
       descripcion: form.descripcion,
@@ -48,25 +66,28 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
       body: JSON.stringify(body),
     });
 
-    if (res.ok) {
-      const data = await res.json();
+    if (!res.ok) {
+      onSuccess({ tipo: "err", texto: "Error al guardar el producto" });
+      setGuardando(false);
+      return;
+    }
 
-      if (form.archivo) {
-        const formData = new FormData();
-        formData.append("file", form.archivo);
-        formData.append("producto_id", data.id);
-        formData.append("es_principal", "true");
-        await fetch(`${API_BASE}/imagenes/subir`, {
+    const data = await res.json();
+
+    if (form.archivo) {
+      const imgUrl = await subir(form.archivo);
+      if (imgUrl) {
+        await fetch(`${API_BASE}/imagenes/`, {
           method: "POST",
-          body: formData,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: imgUrl, es_principal: true, producto_id: data.id }),
         });
       }
-
-      onSuccess({ tipo: "ok", texto: productoEditando ? "Producto actualizado" : "Producto creado" });
-      onHide();
-    } else {
-      onSuccess({ tipo: "err", texto: "Error al guardar el producto" });
     }
+
+    setGuardando(false);
+    onSuccess({ tipo: "ok", texto: productoEditando ? "Producto actualizado" : "Producto creado" });
+    onHide();
   };
 
   const set = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
@@ -107,23 +128,36 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
               {categorias.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
             </Form.Select>
           </Form.Group>
+
           <Form.Group className="mb-4">
             <Form.Label className="label-theme">Imagen del producto</Form.Label>
+            {preview && (
+              <div style={{ marginBottom: 8, borderRadius: 8, overflow: "hidden", width: "100%", maxHeight: 180 }}>
+                <img src={preview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "contain", maxHeight: 180 }} />
+              </div>
+            )}
             <Form.Control
+              ref={fileInputRef}
               className="input-theme"
               type="file"
               accept="image/*"
-              onChange={(e) => setForm((prev) => ({ ...prev, archivo: e.target.files[0] }))}
+              onChange={handleFileChange}
+              disabled={subiendo}
             />
-            {form.archivo && (
-              <p style={{ color: "var(--t2)", fontSize: "0.78rem", marginTop: "6px" }}>
-                Seleccionado: {form.archivo.name}
-              </p>
+            {errorImgBB && (
+              <p style={{ color: "var(--err)", fontSize: "0.78rem", marginTop: 6 }}>{errorImgBB}</p>
             )}
           </Form.Group>
+
+          {productoEditando && <AdminImageGallery productoId={productoEditando.id} />}
+
           <div className="d-grid">
-            <Button type="submit" className="btn-theme-primary">
-              {productoEditando ? "Actualizar Producto" : "Crear Producto"}
+            <Button type="submit" className="btn-theme-primary" disabled={guardando || subiendo}>
+              {guardando || subiendo ? (
+                <><Spinner size="sm" className="me-2" />{subiendo ? "Subiendo imagen..." : "Guardando..."}</>
+              ) : (
+                productoEditando ? "Actualizar Producto" : "Crear Producto"
+              )}
             </Button>
           </div>
         </Form>

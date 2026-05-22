@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from app.database import get_db
 from app.models.carrito import Carrito, CarritoItem
 from app.models.usuario import Usuario
@@ -12,7 +12,11 @@ router = APIRouter(
 )
 
 def obtener_o_crear_carrito(usuario_id: int, db: Session):
-    carrito = db.query(Carrito).filter(Carrito.usuario_id == usuario_id).first()
+    carrito = db.query(Carrito).options(
+        selectinload(Carrito.items)
+        .selectinload(CarritoItem.producto)
+        .selectinload(Producto.imagenes)
+    ).filter(Carrito.usuario_id == usuario_id).first()
     if not carrito:
         carrito = Carrito(usuario_id=usuario_id)
         db.add(carrito)
