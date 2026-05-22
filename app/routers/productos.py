@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.database import get_db
 from app.models.producto import Producto
 from app.models.categoria import Categoria
@@ -12,12 +12,17 @@ router = APIRouter(
 
 @router.get("/", response_model=list[ProductoResponse])
 def obtener_productos(db: Session = Depends(get_db)):
-    productos = db.query(Producto).order_by(Producto.id).all()
-    return productos
+    return db.query(Producto).options(
+        joinedload(Producto.imagenes),
+        joinedload(Producto.categoria)
+    ).order_by(Producto.id).all()
 
 @router.get("/{id}", response_model=ProductoResponse)
 def obtener_producto(id: int, db: Session = Depends(get_db)):
-    producto = db.query(Producto).filter(Producto.id == id).first()
+    producto = db.query(Producto).options(
+        joinedload(Producto.imagenes),
+        joinedload(Producto.categoria)
+    ).filter(Producto.id == id).first()
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto

@@ -172,9 +172,10 @@ Velox-Core/
 ### Imágenes
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| POST | `/imagenes/subir` | Subir imagen (multipart) |
+| POST | `/imagenes/` | Agregar registro de imagen (JSON con URL de ImgBB) |
+| PATCH | `/imagenes/{id}/principal` | Marcar imagen como principal |
 | GET | `/imagenes/{producto_id}` | Obtener imágenes de producto |
-| DELETE | `/imagenes/{imagen_id}` | Eliminar imagen |
+| DELETE | `/imagenes/{imagen_id}` | Eliminar registro de imagen |
 
 ---
 

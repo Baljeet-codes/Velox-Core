@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from app.database import get_db
 from app.models.pedido import Pedido, PedidoItem, EstadoPedido
 from app.models.carrito import Carrito, CarritoItem
@@ -54,12 +54,15 @@ def historial_pedidos(usuario_id: int, db: Session = Depends(get_db)):
     usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    pedidos = db.query(Pedido).filter(Pedido.usuario_id == usuario_id).all()
-    return pedidos
+    return db.query(Pedido).options(
+        selectinload(Pedido.items).selectinload(PedidoItem.producto).selectinload(Producto.imagenes)
+    ).filter(Pedido.usuario_id == usuario_id).all()
 
 @router.get("/todos/", response_model=list[PedidoResponse])
 def obtener_todos_pedidos(db: Session = Depends(get_db)):
-    return db.query(Pedido).order_by(Pedido.id).all()
+    return db.query(Pedido).options(
+        selectinload(Pedido.items).selectinload(PedidoItem.producto).selectinload(Producto.imagenes)
+    ).order_by(Pedido.id).all()
 class ActualizarEstado(BaseModel):
     estado: str
 
