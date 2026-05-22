@@ -31,9 +31,7 @@ export default function ProductModal({ producto, esAdmin, onClose, onAgregarAlCa
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [imgActiva, setImgActiva] = useState(0);
 
-  if (!producto) return null;
-
-  const imagenes = producto.imagenes ?? [];
+  const imagenes = producto?.imagenes ?? [];
   const selImg = imagenes[imgActiva]?.url ?? imgPrincipal(producto);
   const slides = imagenes.length > 0
     ? imagenes.map((img) => ({ src: img.url }))

@@ -100,7 +100,7 @@ export default function CarritoDrawer({ open, onClose, usuario, onChange }) {
 
   useEffect(() => {
     if (open && usuario) fetchCarrito();
-  }, [open]);
+  }, [open, usuario]);
 
   const fetchCarrito = async () => {
     setCargando(true);

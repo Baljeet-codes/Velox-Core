@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session, joinedload
 from app.database import get_db
 from app.models.producto import Producto
 from app.models.categoria import Categoria
+from app.models.carrito import CarritoItem
+from app.models.pedido import PedidoItem
 from app.schemas.producto import ProductoCreate, ProductoResponse
 
 router = APIRouter(
@@ -54,6 +56,15 @@ def eliminar_producto(id: int, db: Session = Depends(get_db)):
     producto = db.query(Producto).filter(Producto.id == id).first()
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
+
+    en_carrito = db.query(CarritoItem).filter(CarritoItem.producto_id == id).first()
+    en_pedido = db.query(PedidoItem).filter(PedidoItem.producto_id == id).first()
+    if en_carrito or en_pedido:
+        raise HTTPException(
+            status_code=409,
+            detail="No se puede eliminar el producto porque existe en carritos o pedidos activos"
+        )
+
     db.delete(producto)
     db.commit()
     return {"mensaje": "Producto eliminado correctamente"}

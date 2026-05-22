@@ -63,17 +63,50 @@ def obtener_todos_pedidos(db: Session = Depends(get_db)):
     return db.query(Pedido).options(
         selectinload(Pedido.items).selectinload(PedidoItem.producto).selectinload(Producto.imagenes)
     ).order_by(Pedido.id).all()
+TRANSICIONES_VALIDAS = {
+    EstadoPedido.pendiente: [EstadoPedido.pagado, EstadoPedido.cancelado],
+    EstadoPedido.pagado: [EstadoPedido.enviado, EstadoPedido.cancelado],
+    EstadoPedido.enviado: [EstadoPedido.entregado, EstadoPedido.cancelado],
+    EstadoPedido.entregado: [EstadoPedido.cancelado],
+}
+
+
 class ActualizarEstado(BaseModel):
     estado: str
+
+
+def _requiere_stock(estado: str) -> bool:
+    return estado == "pagado"
+
 
 @router.put("/{pedido_id}/estado")
 def actualizar_estado(pedido_id: int, datos: ActualizarEstado, db: Session = Depends(get_db)):
     pedido = db.query(Pedido).filter(Pedido.id == pedido_id).first()
     if not pedido:
         raise HTTPException(status_code=404, detail="Pedido no encontrado")
+
     estado_anterior = pedido.estado
+    try:
+        nuevo_estado = EstadoPedido(datos.estado)
+    except ValueError:
+        raise HTTPException(status_code=400, detail=f"Estado inválido: {datos.estado}")
+
+    if estado_anterior == nuevo_estado:
+        raise HTTPException(status_code=400, detail=f"El pedido ya está en estado '{nuevo_estado.value}'")
+
+    if nuevo_estado not in TRANSICIONES_VALIDAS.get(estado_anterior, []):
+        raise HTTPException(
+            status_code=400,
+            detail=f"No se puede cambiar de '{estado_anterior.value}' a '{nuevo_estado.value}'"
+        )
+
     usuario = db.query(Usuario).filter(Usuario.id == pedido.usuario_id).first()
-    if datos.estado == "pagado" and estado_anterior != EstadoPedido.pagado:
+
+    stock_ya_deducido = estado_anterior in (
+        EstadoPedido.pagado, EstadoPedido.enviado, EstadoPedido.entregado
+    )
+
+    if _requiere_stock(datos.estado) and not stock_ya_deducido:
         for pedido_item in pedido.items:
             producto = db.query(Producto).filter(Producto.id == pedido_item.producto_id).first()
             if producto.stock < pedido_item.cantidad:
@@ -85,13 +118,15 @@ def actualizar_estado(pedido_id: int, datos: ActualizarEstado, db: Session = Dep
             producto.stock -= pedido_item.cantidad
         if usuario:
             usuario.puntos_fidelidad += int(pedido.total)
-    if datos.estado == "cancelado" and estado_anterior in (EstadoPedido.pagado, EstadoPedido.enviado, EstadoPedido.entregado):
+
+    elif datos.estado == "cancelado" and stock_ya_deducido:
         for pedido_item in pedido.items:
             producto = db.query(Producto).filter(Producto.id == pedido_item.producto_id).first()
             producto.stock += pedido_item.cantidad
         if usuario:
             usuario.puntos_fidelidad = max(0, usuario.puntos_fidelidad - int(pedido.total))
-    pedido.estado = datos.estado
+
+    pedido.estado = nuevo_estado
     db.commit()
     db.refresh(pedido)
-    return {"mensaje": "Estado actualizado", "estado": pedido.estado}
+    return {"mensaje": "Estado actualizado", "estado": pedido.estado.value}
