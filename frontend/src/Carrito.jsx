@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Alert, Spinner } from "react-bootstrap";
 
 import { API_BASE } from "./config";
-
-const imgPrincipal = (producto) =>
-  producto.imagenes?.find((i) => i.es_principal)?.url ?? producto.imagenes?.[0]?.url ?? null;
+import { imgPrincipal } from "./utils/imagenUtils";
 
 /* ─── Checkout modal ─── */
 function Checkout({ usuario, total, onClose, onSuccess }) {

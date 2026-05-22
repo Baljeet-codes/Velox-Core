@@ -3,6 +3,7 @@ import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { API_BASE } from "../config";
+import { imgPrincipal } from "../utils/imagenUtils";
 
 const estadoStyle = (estado) => ({
   background:
@@ -153,9 +154,9 @@ export default function MisPedidos({ usuario }) {
                                 background: "var(--bg-4)", overflow: "hidden", flexShrink: 0,
                               }}
                             >
-                              {item.producto?.imagen_url && (
+                              {imgPrincipal(item.producto) && (
                                 <img
-                                  src={item.producto.imagen_url}
+                                  src={imgPrincipal(item.producto)}
                                   alt={item.producto.nombre}
                                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                 />

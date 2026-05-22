@@ -1,8 +1,6 @@
 import React from "react";
 import { Col, Card, Button } from "react-bootstrap";
-
-const imgPrincipal = (p) =>
-  p.imagenes?.find((i) => i.es_principal)?.url ?? p.imagenes?.[0]?.url ?? null;
+import { imgPrincipal } from "../utils/imagenUtils";
 
 export default function ProductCard({
   producto: p,

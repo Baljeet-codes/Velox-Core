@@ -3,9 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/styles.css";
-
-const imgPrincipal = (p) =>
-  p.imagenes?.find((i) => i.es_principal)?.url ?? p.imagenes?.[0]?.url ?? null;
+import { imgPrincipal } from "../utils/imagenUtils";
 
 export default function ProductModal({ producto, esAdmin, onClose, onAgregarAlCarrito }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
