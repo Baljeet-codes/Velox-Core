@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Spinner } from "react-bootstrap";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_BASE } from "../config";
 
 const estadoStyle = (estado) => ({
   background:

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Alert, Row, Col } from "react-bootstrap";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_BASE } from "../config";
 const FORM0 = { nombre: "", descripcion: "", precio: "", marca: "", stock: "", imagen_url: "", categoria_id: "" };
 
 export default function AdminProductos() {

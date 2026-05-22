@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Alert, Spinner } from "react-bootstrap";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_BASE } from "./config";
 
 const imgPrincipal = (producto) =>
   producto.imagenes?.find((i) => i.es_principal)?.url ?? producto.imagenes?.[0]?.url ?? null;
