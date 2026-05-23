@@ -16,6 +16,7 @@ venv/
 # ── Environment variables ──
 .env
 frontend/.env
+frontend/.env.production
 
 # ── Node.js ──
 node_modules/
@@ -41,5 +42,4 @@ static/uploads/
 # ── Logs ──
 *.log
 cdk/cdk.out/
-.env.production
 
