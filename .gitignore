@@ -41,5 +41,3 @@ static/uploads/
 # ── Logs ──
 *.log
 cdk/cdk.out/
-.env.production
-
