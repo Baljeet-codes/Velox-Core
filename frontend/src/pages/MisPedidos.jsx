@@ -1,3 +1,11 @@
+// ════════════════════════════════════════════════════════════════
+// PASO 9: HISTORIAL DE PEDIDOS
+// - GET /pedidos/historial/{usuario_id}
+// - Cada pedido muestra: #ID, estado coloreado y total
+// - Click → expande detalle con productos, cantidades y precios
+// - Estados posibles: pendiente, pagado, enviado, entregado, cancelado
+// - Pedidos cancelados muestran aviso "Capital devuelto"
+// ════════════════════════════════════════════════════════════════
 import React, { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";

@@ -1,3 +1,9 @@
+// ════════════════════════════════════════════════════════════════
+// COMPONENTE: Formulario modal para crear/editar productos (admin)
+// - Si es creación: permite subir imagen inicial a ImgBB
+// - Si es edición: muestra AdminImageGallery con las imágenes
+//   existentes para gestionarlas (subir más, marcar principal, eliminar)
+// ════════════════════════════════════════════════════════════════
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import { API_BASE } from "../config";
@@ -14,6 +20,7 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
   const { subir, subiendo, error: errorImgBB, limpiarError } = useImgBB();
   const fileInputRef = useRef(null);
 
+  // ── Inicializar formulario al abrir el modal ──
   useEffect(() => {
     if (!show) return;
     fetch(`${API_BASE}/categorias/`).then((r) => r.json()).then(setCategorias);
@@ -35,6 +42,7 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [show, productoEditando]);
 
+  // ── Preview local de la imagen seleccionada ──
   const handleFileChange = (e) => {
     const archivo = e.target.files[0];
     if (!archivo) return;
@@ -42,6 +50,8 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
     setPreview(URL.createObjectURL(archivo));
   };
 
+  // ── Guardar producto (crear o actualizar) ──
+  // Si se adjuntó una imagen, la sube a ImgBB y la asocia al producto
   const handleSubmit = async (e) => {
     e.preventDefault();
     setGuardando(true);
@@ -74,6 +84,7 @@ export default function AdminProductForm({ show, onHide, productoEditando, onSuc
 
     const data = await res.json();
 
+    // ── Subir imagen a ImgBB y asociarla al producto ──
     if (form.archivo) {
       const imgUrl = await subir(form.archivo);
       if (imgUrl) {

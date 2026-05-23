@@ -1,3 +1,13 @@
+// ════════════════════════════════════════════════════════════════
+// COMPONENTE: Modal de detalle de producto (PASO 4)
+// - Galería con navegación (‹ ›) y thumbnails
+// - Navegación por teclado: ArrowLeft / ArrowRight
+// - Lightbox con zoom (yet-another-react-lightbox)
+// - Animación veloxFadeIn al cambiar de imagen
+// - Información: precio, categoría, marca, descripción, stock
+// - Stock coloreado: >5 verde, 1-5 amarillo, 0 rojo
+// - Botón "+ Agregar al carrito" (deshabilitado si stock=0)
+// ════════════════════════════════════════════════════════════════
 import React, { useState, useEffect, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Lightbox from "yet-another-react-lightbox";

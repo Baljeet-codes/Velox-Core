@@ -1,3 +1,12 @@
+// ════════════════════════════════════════════════════════════════
+// COMPONENTE: Tarjeta individual de producto (grilla del catálogo)
+// - Muestra imagen principal vía imgPrincipal()
+// - Fallback "SIN IMAGEN" si el producto no tiene imágenes
+// - Badge de categoría, nombre, marca y precio
+// - Botones contextuales según el rol:
+//   * Usuario normal → "Ver" + "+ Carrito"
+//   * Admin → "Ver" + "Editar" + "✕ Eliminar"
+// ════════════════════════════════════════════════════════════════
 import React from "react";
 import { Col, Card, Button } from "react-bootstrap";
 import { imgPrincipal } from "../utils/imagenUtils";

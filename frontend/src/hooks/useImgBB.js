@@ -1,3 +1,17 @@
+// ════════════════════════════════════════════════════════════════
+// HOOK: SUBIDA DE IMÁGENES A IMGBB
+// Flujo completo:
+//   1. Lee VITE_IMGBB_KEY de import.meta.env
+//   2. Validaciones: tipo image/*, tamaño ≤ 5MB
+//   3. Construye FormData con el archivo seleccionado
+//   4. POST multipart a https://api.imgbb.com/1/upload
+//   5. Si success → retorna json.data.url
+//   6. Si error → setError(mensaje) y retorna null
+//
+// Nota: ImgBB no expone endpoint DELETE, por lo que
+// la URL queda accesible incluso después de borrar el
+// registro de nuestra base de datos.
+// ════════════════════════════════════════════════════════════════
 import { useState, useCallback } from "react";
 
 const IMGBB_KEY = import.meta.env.VITE_IMGBB_KEY;
@@ -9,14 +23,17 @@ export function useImgBB() {
   const [error, setError] = useState(null);
 
   const subir = useCallback(async (archivo) => {
+    // ── Validar que la key esté configurada ──
     if (!IMGBB_KEY) {
       setError("VITE_IMGBB_KEY no está configurada en .env");
       return null;
     }
+    // ── Validar tipo de archivo ──
     if (!archivo.type.startsWith("image/")) {
       setError("Solo se permiten archivos de imagen");
       return null;
     }
+    // ── Validar tamaño máximo ──
     if (archivo.size > MAX_SIZE) {
       setError("La imagen no debe superar los 5MB");
       return null;

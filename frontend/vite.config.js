@@ -1,3 +1,9 @@
+// ════════════════════════════════════════════════════════════════
+// Configuración de Vite
+// - Proxy para desarrollo local: /static → backend FastAPI
+// - En producción (Amplify) los assets se sirven estáticamente
+//   y el backend se alcanza via VITE_API_URL (config.js)
+// ════════════════════════════════════════════════════════════════
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
