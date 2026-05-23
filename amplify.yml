@@ -1,3 +1,11 @@
+# ════════════════════════════════════════════════════════════════
+# Configuración de build para AWS Amplify
+# - Fase build: npm ci → npm run build (producción)
+# - Artefactos: frontend/dist/**/*
+# - Cache: node_modules para acelerar builds
+# - Variables de entorno se configuran en UI de Amplify:
+#   VITE_API_URL, VITE_IMGBB_KEY
+# ════════════════════════════════════════════════════════════════
 version: 1
 frontend:
   phases:

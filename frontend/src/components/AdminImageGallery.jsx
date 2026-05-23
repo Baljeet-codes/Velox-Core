@@ -1,3 +1,21 @@
+// ════════════════════════════════════════════════════════════════
+// COMPONENTE: Galería de imágenes para el panel admin
+//
+// Flujo SUBIR:
+//   1. Usuario selecciona archivo → handleUpload()
+//   2. useImgBB.subir() → sube a ImgBB → retorna URL
+//   3. useImagenes.agregar() → POST /imagenes/ → guarda en DB
+//   4. Si es la primera imagen del producto → es_principal = true
+//
+// Flujo MARCAR COMO PRINCIPAL:
+//   handleSetPrincipal() → PATCH /imagenes/{id}/principal
+//   Backend desmarca todas las demás del mismo producto
+//
+// Flujo ELIMINAR:
+//   handleDelete() → DELETE /imagenes/{id}
+//   Solo borra el registro en PostgreSQL. La URL de ImgBB
+//   sigue accesible (ImgBB no expone endpoint DELETE).
+// ════════════════════════════════════════════════════════════════
 import React, { useEffect, useRef } from "react";
 import { Form, Spinner } from "react-bootstrap";
 import { useImagenes } from "../hooks/useImagenes";
@@ -12,6 +30,7 @@ export default function AdminImageGallery({ productoId }) {
     if (productoId) cargar();
   }, [productoId]);
 
+  // ── Subir imagen: archivo → ImgBB → guardar URL en DB ──
   const handleUpload = async (e) => {
     const archivo = e.target.files[0];
     if (!archivo) return;
@@ -22,11 +41,13 @@ export default function AdminImageGallery({ productoId }) {
     if (fileRef.current) fileRef.current.value = "";
   };
 
+  // ── Eliminar registro de imagen (no la URL de ImgBB) ──
   const handleDelete = async (imagen) => {
     if (!confirm(`¿Eliminar esta imagen?`)) return;
     await eliminar(imagen.id);
   };
 
+  // ── Marcar imagen como principal ──
   const handleSetPrincipal = async (imagen) => {
     await marcarPrincipal(imagen.id);
   };

@@ -1,10 +1,28 @@
+// ════════════════════════════════════════════════════════════════
+// CARRITO: Drawer lateral + Checkout modal
+//
+// CarritoDrawer (PASO 6):
+//   - Backdrop oscuro + panel deslizante desde la derecha
+//   - GET /carrito/{usuario_id} al abrirse
+//   - Cada item: miniatura, nombre, precio total
+//   - Controles: − cantidad +, "Eliminar"
+//   - Footer: total acumulado + "Finalizar Pedido →"
+//
+// Checkout modal (PASO 7):
+//   - Formulario con dirección de envío (precargada del perfil)
+//   - Botón "Confirmar Pedido · $XXXX"
+//   - POST /pedidos/{usuario_id} { direccion_envio }
+//   - Pantalla "✅ Pedido realizado" al confirmar (PASO 8)
+// ════════════════════════════════════════════════════════════════
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Alert, Spinner } from "react-bootstrap";
 
 import { API_BASE } from "./config";
 import { imgPrincipal } from "./utils/imagenUtils";
 
-/* ─── Checkout modal ─── */
+/* ────────────────────────────────────────────────────────── */
+/*  CHECKOUT MODAL (PASO 7-8): Confirmación de pedido        */
+/* ────────────────────────────────────────────────────────── */
 function Checkout({ usuario, total, onClose, onSuccess }) {
   const [direccion, setDireccion] = useState(usuario.direccion || "");
   const [cargando, setCargando] = useState(false);
@@ -135,10 +153,10 @@ export default function CarritoDrawer({ open, onClose, usuario, onChange }) {
 
   return (
     <>
-      {/* Backdrop */}
+      {/* ── Backdrop oscuro ── */}
       <div className={`cart-backdrop${open ? " open" : ""}`} onClick={onClose} />
 
-      {/* Panel */}
+      {/* ── Drawer lateral (PASO 6) ── */}
       <div className={`cart-drawer${open ? " open" : ""}`}>
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 22px", borderBottom: "1px solid var(--border)" }}>
@@ -218,7 +236,7 @@ export default function CarritoDrawer({ open, onClose, usuario, onChange }) {
           )}
         </div>
 
-        {/* Footer */}
+        {/* ── Footer: total + "Finalizar Pedido" ── */}
         {items.length > 0 && (
           <div style={{ padding: "18px 22px", borderTop: "1px solid var(--border)", background: "var(--bg-1)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
@@ -238,7 +256,7 @@ export default function CarritoDrawer({ open, onClose, usuario, onChange }) {
         )}
       </div>
 
-      {/* Checkout */}
+      {/* ── Checkout modal (PASO 7) ── */}
       {checkoutOpen && (
         <Checkout
           usuario={usuario}

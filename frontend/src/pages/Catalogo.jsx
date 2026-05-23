@@ -1,3 +1,10 @@
+// ════════════════════════════════════════════════════════════════
+// PASO 3: CATÁLOGO (página principal)
+// - Fetch GET /productos/ al montar el componente
+// - Renderiza grilla responsive con ProductCard
+// - Modal de detalle al hacer clic en "Ver"
+// - Modal admin para crear/editar productos
+// ════════════════════════════════════════════════════════════════
 import React, { useState, useEffect } from "react";
 import { Row, Spinner, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +27,7 @@ export default function Catalogo({ usuario, onCarritoChange, esAdmin = false }) 
   const [mensajeAdmin, setMensajeAdmin] = useState(null);
   const navigate = useNavigate();
 
+  // ── Cargar productos desde el backend ──
   useEffect(() => {
     let ok = true;
     fetch(`${API_BASE}/productos/`)
@@ -30,6 +38,10 @@ export default function Catalogo({ usuario, onCarritoChange, esAdmin = false }) 
     return () => (ok = false);
   }, []);
 
+  // ── PASO 5: Agregar producto al carrito ──
+  // Si no hay sesión activa → redirige a /login
+  // POST /carrito/{usuario_id} con { producto_id, cantidad: 1 }
+  // Feedback: botón cambia a "✓ Agregado" por 2 segundos
   const agregarAlCarrito = async (producto) => {
     if (!usuario) { navigate("/login"); return; }
     setAgregando(true);

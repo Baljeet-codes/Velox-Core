@@ -1,3 +1,13 @@
+// ════════════════════════════════════════════════════════════════
+// HOOK: CRUD DE IMÁGENES CONTRA BACKEND FASTAPI
+// Métodos disponibles:
+//   cargar()         → GET  /imagenes/{producto_id}
+//   agregar(url, pri) → POST /imagenes/
+//   eliminar(id)     → DELETE /imagenes/{id}
+//   marcarPrincipal(id) → PATCH /imagenes/{id}/principal
+//
+// Cada mutación refresca la lista automáticamente.
+// ════════════════════════════════════════════════════════════════
 import { useState, useCallback } from "react";
 import { API_BASE } from "../config";
 
